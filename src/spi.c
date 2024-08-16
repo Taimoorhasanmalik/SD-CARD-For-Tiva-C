@@ -56,10 +56,12 @@ uint64_t SPI_Receive_Data_Compare(uint64_t EXP_OUT)
   return value;
 }
 
-void SPI_SEND_CMD(uint8_t cmd, uint32_t arg) {
+uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive) {
     // Send the command byte with the start bit (0x40)
     int i;
-    uint8_t crc = 0x01; // Default CRC value (not checked for most commands)
+  	uint64_t value = 0xFF;
+    uint64_t val_temp = 0xFF;
+    uint8_t crc = 0xFF; // Default CRC value (not checked for most commands)
 
     
     // Reverse the bytes of the argument manually
@@ -76,17 +78,35 @@ void SPI_SEND_CMD(uint8_t cmd, uint32_t arg) {
     }
 
 
+
     SPI_Transfer(cmd | 0x40);
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
     // Send the 4-byte reversed argument (MSB first)
-    while (reversed_arg){
-    SPI_Transfer((reversed_arg) & 0xFF);
+    SPI_Transfer(reversed_arg & 0xFF);
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
-    reversed_arg= reversed_arg>>8;
+    SPI_Transfer(reversed_arg>>8 & 0xFF);
+    while(SPI_STATUS_R & SPI_BUSY_FLAG);
+    SPI_Transfer(reversed_arg>>16 & 0xFF);
+    while(SPI_STATUS_R & SPI_BUSY_FLAG);
+    SPI_Transfer(reversed_arg>>24 & 0xFF);
+    while(SPI_STATUS_R & SPI_BUSY_FLAG);
+    if (cmd == 0 || cmd == 8) {      // CMD0
+      SPI_Transfer(crc);
+      while(SPI_STATUS_R & SPI_BUSY_FLAG);
     }
-    SPI_Transfer(crc);
-    while(SPI_STATUS_R & SPI_BUSY_FLAG);
-
+    if (receive)
+    {
+    for (i = 0; i<4; i++)
+      {
+        SPI_Transfer(0xFF);
+        while(SPI_STATUS_R & SPI_BUSY_FLAG);
+        val_temp = (SPI_DATA_R & 0xFF);
+        value =value << 8;
+        value |= val_temp;
+    }
+    return value;
+    }
+return 0;
 }
 
 uint64_t SPI_Receive_Data(uint16_t num_of_bytes)
@@ -113,3 +133,15 @@ uint64_t SPI_Receive_Data(uint16_t num_of_bytes)
 }
 
 
+uint64_t SPI_Receive_Data_Single_Shot(void)
+{
+	uint64_t value=0;
+  int i;
+  for (i = 0; i<4; i++)
+  {
+    value=value << 8;
+    value |= SPI_DATA_R & 0xFF;
+
+  }
+  return value;
+}

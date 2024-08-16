@@ -39,8 +39,7 @@ int main (void){
   }
 
   SPI_EN(); //CS is set low
-	SPI_SEND_CMD(0,0x00000000);
-  while(SPI_STATUS_R & SPI_BUSY_FLAG);
+	SPI_SEND_CMD(0,0x00000000,0);
   response = SPI_Receive_Data_Compare(0x01);
 	OutCRLF();
   sprintf(string,"%lld",response);
@@ -51,8 +50,7 @@ int main (void){
 	OutCRLF();
   GPIO_PORTF_DATA_R = GPIO_LED_GREEN;
 
-  SPI_SEND_CMD(8,0x000001AA);
-
+  SPI_SEND_CMD(8,0x000001AA,0);
   response = SPI_Receive_Data(5);
   // response=SPI_Receive_Data_Compare(0x01);
   UART_OutString("CMD 8 Executed");
@@ -61,19 +59,21 @@ int main (void){
 	UART_OutString(string);
 	OutCRLF();
 
-do {
-    SPI_SEND_CMD(55, 0x00000000);          // CMD55
-    SPI_SEND_CMD(41, 0x40000000);          // CMD55
-    response = SPI_Receive_Data(8);  // CMD41
-} while (response != 0x00);
-  response = SPI_Receive_Data(8);  
-  // SPI_SEND_CMD(0x0000000077);
-  response = SPI_Receive_Data_Compare(0x00);
-  // sprintf(string,"%lld",response);
-	// UART_OutString(string);
-  response = SPI_Receive_Data(4);
-	OutCRLF();
-  UART_OutString("CMD 17 Executed");
+  do {
+      SPI_SEND_CMD(55, 0x00000000,0);          // CMD55
+      response = SPI_SEND_CMD(41, 0x40000000,1);          // CMD41
+      sprintf(string,"%lld",response);
+    UART_OutString(string);
+    OutCRLF();
+  } while (response != 0x00);
+    response = SPI_Receive_Data(8);  
+    //SPI_SEND_CMD(0x0000000077,0);
+    response = SPI_Receive_Data_Compare(0x00);
+    sprintf(string,"%lld",response);
+    UART_OutString(string);
+    response = SPI_Receive_Data(4);
+    OutCRLF();
+    UART_OutString("CMD 17 Executed");
 
 	OutCRLF();
   sprintf(string,"%lld",response);
