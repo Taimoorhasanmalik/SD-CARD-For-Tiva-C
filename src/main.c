@@ -39,7 +39,8 @@ int main (void){
   }
 
   SPI_EN(); //CS is set low
-	SPI_SEND_CMD(0x00,0x9500000040);
+	SPI_SEND_CMD(0,0x00000000);
+  while(SPI_STATUS_R & SPI_BUSY_FLAG);
   response = SPI_Receive_Data_Compare(0x01);
 	OutCRLF();
   sprintf(string,"%lld",response);
@@ -48,14 +49,10 @@ int main (void){
   response = 0;
   UART_OutString("SD CARD is in SPI MODE");
 	OutCRLF();
-  for (i = 0; i<100;i++)
-  {
-    SPI_Transfer(0xFF);
-	  while(SPI_STATUS_R & SPI_BUSY_FLAG);	
-  }
   GPIO_PORTF_DATA_R = GPIO_LED_GREEN;
-  SPI_SEND_CMD(8,0xAA010000);
-  SPI_Transfer(0x87);
+
+  SPI_SEND_CMD(8,0x000001AA);
+
   response = SPI_Receive_Data(5);
   // response=SPI_Receive_Data_Compare(0x01);
   UART_OutString("CMD 8 Executed");
@@ -63,15 +60,13 @@ int main (void){
   sprintf(string,"%lld",response);
 	UART_OutString(string);
 	OutCRLF();
-  // SPI_SEND_CMD(0x000000004A);
-  response = SPI_Receive_Data(8);
-  // response=SPI_Receive_Data_Compare(0x01);
-  UART_OutString("CMD 55 Executed");
-	OutCRLF();
-  sprintf(string,"%lld",response);
-	UART_OutString(string);
-	OutCRLF();
-  
+
+do {
+    SPI_SEND_CMD(55, 0x00000000);          // CMD55
+    SPI_SEND_CMD(41, 0x40000000);          // CMD55
+    response = SPI_Receive_Data(8);  // CMD41
+} while (response != 0x00);
+  response = SPI_Receive_Data(8);  
   // SPI_SEND_CMD(0x0000000077);
   response = SPI_Receive_Data_Compare(0x00);
   // sprintf(string,"%lld",response);

@@ -49,6 +49,6 @@
 void SPI_Init(void);
 uint64_t SPI_Receive_Data_Compare(uint64_t EXP_OUT);
 void SPI_Transfer(uint8_t data);
-void SPI_SEND_CMD(uint8_t cmd ,uint64_t arg);
+void SPI_SEND_CMD(uint8_t cmd ,uint32_t arg);
 uint64_t SPI_Receive_Data(uint16_t num_of_bytes);
 

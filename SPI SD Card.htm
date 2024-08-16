@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\SPI SD Card.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\SPI SD Card.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri Aug 16 18:17:53 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Fri Aug 16 19:44:41 2024
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1239,7 +1239,7 @@ Global Symbols
 <P><STRONG><a name="[78]"></a>SystemInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(.text)
 </UL>
-<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 328 bytes, Stack size 24 bytes, main.o(.text))
+<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 312 bytes, Stack size 24 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
 <LI>Call Chain = main &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1277,7 +1277,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[96]"></a>SPI_SEND_CMD</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, spi.o(.text))
+<P><STRONG><a name="[96]"></a>SPI_SEND_CMD</STRONG> (Thumb, 120 bytes, Stack size 16 bytes, spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SPI_SEND_CMD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
