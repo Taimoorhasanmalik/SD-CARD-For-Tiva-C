@@ -4,17 +4,17 @@ F (.\src\gpio.c)(0x66B9ADFD)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interw
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\gpio.h)(0x66B9ADFD)
-F (.\src\main.c)(0x66BF74D3)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\src\main.c)(0x66C0849D)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdio.h)(0x51C7E174)
-I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66BF7508)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66C07236)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\gpio.h)(0x66B9ADFD)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
-F (.\src\spi.c)(0x66BF7607)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\spi.o --omf_browse .\spi.crf --depend .\spi.d)
+F (.\src\spi.c)(0x66C08191)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\spi.o --omf_browse .\spi.crf --depend .\spi.d)
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
-I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66BF7508)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66C07236)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
 F (.\src\uart.c)(0x66BCB056)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)

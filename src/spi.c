@@ -59,8 +59,7 @@ uint64_t SPI_Receive_Data_Compare(uint64_t EXP_OUT)
 uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive) {
     // Send the command byte with the start bit (0x40)
     int i;
-  	uint64_t value = 0xFF;
-    uint64_t val_temp = 0xFF;
+  	uint32_t value = 0xFF;
     uint8_t crc = 0xFF; // Default CRC value (not checked for most commands)
 
     
@@ -77,8 +76,6 @@ uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive) {
         crc = 0x87;
     }
 
-
-
     SPI_Transfer(cmd | 0x40);
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
     // Send the 4-byte reversed argument (MSB first)
@@ -90,19 +87,25 @@ uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive) {
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
     SPI_Transfer(reversed_arg>>24 & 0xFF);
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
-    if (cmd == 0 || cmd == 8) {      // CMD0
+
+    if (cmd == 0 || cmd == 8) {      // CMD0 or CMD8
       SPI_Transfer(crc);
       while(SPI_STATUS_R & SPI_BUSY_FLAG);
     }
+    else{
+    SPI_Transfer(0xFF);
+    while(SPI_STATUS_R & SPI_BUSY_FLAG);
+    }
     if (receive)
     {
+      SPI_Transfer(0xFF);
+      while(SPI_STATUS_R & SPI_BUSY_FLAG);
     for (i = 0; i<4; i++)
       {
         SPI_Transfer(0xFF);
         while(SPI_STATUS_R & SPI_BUSY_FLAG);
-        val_temp = (SPI_DATA_R & 0xFF);
         value =value << 8;
-        value |= val_temp;
+        value |=(SPI_DATA_R & 0xFF);
     }
     return value;
     }
@@ -133,15 +136,50 @@ uint64_t SPI_Receive_Data(uint16_t num_of_bytes)
 }
 
 
-uint64_t SPI_Receive_Data_Single_Shot(void)
+uint8_t SPI_Receive_Data_Single_Shot(void)
 {
-	uint64_t value=0;
+	uint8_t value=0;
   int i;
-  for (i = 0; i<4; i++)
-  {
-    value=value << 8;
-    value |= SPI_DATA_R & 0xFF;
+  SPI_Transfer(0xFF);
+  while(SPI_STATUS_R & SPI_BUSY_FLAG);	
 
-  }
+  value = SPI_DATA_R & 0xFF;
+
   return value;
+}
+
+
+void SD_Read_Block(uint32_t block_address) {
+    uint8_t response;
+    uint16_t i;
+    uint8_t buffer[200];
+    // Convert block address to byte address if card is in byte addressing mode
+    // Most modern SD cards use block addressing, so no conversion might be necessary.
+
+    // Send CMD17 (Read Single Block)
+    SPI_SEND_CMD(17, block_address, 0);
+
+    // Wait for the R1 response (should be 0x00 if successful)
+    response = SPI_Receive_Data_Single_Shot();
+    if (response != 0x00) {
+        UART_OutString("CMD17 failed");
+        OutCRLF();
+        return;
+    }
+
+    // Wait for data token (0xFE)
+    while ((response = SPI_Receive_Data_Single_Shot()) != 0xFE);
+
+    // Read the 512-byte data block
+    for (i = 0; i < 512; i++) {
+        buffer[i] = SPI_Receive_Data_Single_Shot();
+    }
+
+    // Skip the 2-byte CRC (optional)
+    SPI_Receive_Data_Single_Shot();
+    SPI_Receive_Data_Single_Shot();
+
+    // Now buffer[] contains the data from the block
+    UART_OutString("Block Read Successfully");
+    OutCRLF();
 }

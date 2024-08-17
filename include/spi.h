@@ -52,4 +52,5 @@ void SPI_Transfer(uint8_t data);
 uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive); 
 uint64_t SPI_Receive_Data(uint16_t num_of_bytes);
 
-uint64_t SPI_Receive_Data_Single_Shot(void);
+uint8_t SPI_Receive_Data_Single_Shot(void);
+void SD_Read_Block(uint32_t block_address);
