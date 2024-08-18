@@ -44,13 +44,13 @@
 #define ARRAY_SIZE(x)               (sizeof(x) / sizeof((x)[0]))
 #define SPI_EN()                     GPIO_PORTD_DATA_R &= (~0x02)
 #define SPI_DIS()                    GPIO_PORTD_DATA_R |= 0x02
+#define SPI_CLK_EN()                 GPIO_PORTD_DATA_R &= (~0x01)
+#define SPI_CLK_DIS()                GPIO_PORTD_DATA_R |= 0x01
 
 // Function prototypes for SPI interface
 void SPI_Init(void);
 uint64_t SPI_Receive_Data_Compare(uint64_t EXP_OUT);
 void SPI_Transfer(uint8_t data);
-uint32_t SPI_SEND_CMD(uint8_t cmd, uint32_t arg, uint32_t receive); 
 uint64_t SPI_Receive_Data(uint16_t num_of_bytes);
 
 uint8_t SPI_Receive_Data_Single_Shot(void);
-void SD_Read_Block(uint32_t block_address);
