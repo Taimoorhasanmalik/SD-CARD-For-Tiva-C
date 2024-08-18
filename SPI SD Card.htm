@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\SPI SD Card.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\SPI SD Card.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sun Aug 18 19:45:01 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sun Aug 18 20:24:36 2024
 <BR><P>
-<H3>Maximum Stack Usage =        200 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        248 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; sdcard_init &rArr; SPI_Receive_Data_Compare &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+main &rArr; SD_Read_Block &rArr; SPI_SEND_CMD
 <P>
 <H3>
 Functions with no stack information
@@ -391,8 +391,8 @@ Global Symbols
 <P><STRONG><a name="[ce]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[8c]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 200 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; sdcard_init &rArr; SPI_Receive_Data_Compare &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; SD_Read_Block &rArr; SPI_SEND_CMD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1246,14 +1246,15 @@ Global Symbols
 <P><STRONG><a name="[78]"></a>SystemInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(.text)
 </UL>
-<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 200 + Unknown Stack Size
-<LI>Call Chain = main &rArr; sdcard_init &rArr; SPI_Receive_Data_Compare &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
+<LI>Call Chain = main &rArr; SD_Read_Block &rArr; SPI_SEND_CMD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Init
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
@@ -1265,57 +1266,55 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9a]"></a>SPI_Transfer</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, spi.o(.text))
+<P><STRONG><a name="[9b]"></a>SPI_Transfer</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, spi.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
 </UL>
 
-<P><STRONG><a name="[98]"></a>SPI_Receive_Data_Compare</STRONG> (Thumb, 80 bytes, Stack size 40 bytes, spi.o(.text))
+<P><STRONG><a name="[99]"></a>SPI_Receive_Data_Compare</STRONG> (Thumb, 80 bytes, Stack size 40 bytes, spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = SPI_Receive_Data_Compare &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
 </UL>
 
-<P><STRONG><a name="[9b]"></a>SPI_Receive_Data</STRONG> (Thumb, 116 bytes, Stack size 20 bytes, spi.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<P><STRONG><a name="[9c]"></a>SPI_Receive_Data</STRONG> (Thumb, 116 bytes, Stack size 20 bytes, spi.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 </UL>
 
-<P><STRONG><a name="[9c]"></a>SPI_Receive_Data_Single_Shot</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, spi.o(.text))
+<P><STRONG><a name="[9d]"></a>SPI_Receive_Data_Single_Shot</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = SPI_Receive_Data_Single_Shot
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_format
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 </UL>
 
 <P><STRONG><a name="[93]"></a>UART_Init</STRONG> (Thumb, 136 bytes, Stack size 0 bytes, uart.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9f]"></a>UART_InChar</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, uart.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InString
+<P><STRONG><a name="[a0]"></a>UART_InChar</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, uart.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InString
 </UL>
 
-<P><STRONG><a name="[9d]"></a>UART_OutChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, uart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InString
+<P><STRONG><a name="[9e]"></a>UART_OutChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, uart.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InString
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
@@ -1323,109 +1322,111 @@ Global Symbols
 <P><STRONG><a name="[95]"></a>UART_OutString</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, uart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = UART_OutString
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_format
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9e]"></a>UART_InString</STRONG> (Thumb, 60 bytes, Stack size 12 bytes, uart.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InChar
+<P><STRONG><a name="[9f]"></a>UART_InString</STRONG> (Thumb, 60 bytes, Stack size 12 bytes, uart.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_InChar
 </UL>
 
 <P><STRONG><a name="[94]"></a>OutCRLF</STRONG> (Thumb, 16 bytes, Stack size 4 bytes, uart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = OutCRLF
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_format
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a1]"></a>delay_ms</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, sd_card.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<P><STRONG><a name="[a2]"></a>delay_ms</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, sd_card.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
 </UL>
 
-<P><STRONG><a name="[a0]"></a>SPI_SEND_CMD</STRONG> (Thumb, 224 bytes, Stack size 32 bytes, sd_card.o(.text))
+<P><STRONG><a name="[a1]"></a>SPI_SEND_CMD</STRONG> (Thumb, 224 bytes, Stack size 32 bytes, sd_card.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SPI_SEND_CMD
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_format
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Block
 </UL>
 
-<P><STRONG><a name="[a2]"></a>SPI_SEND_ACMD</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, sd_card.o(.text))
+<P><STRONG><a name="[a3]"></a>SPI_SEND_ACMD</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, sd_card.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = SPI_SEND_ACMD &rArr; SPI_SEND_CMD
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
 </UL>
 
-<P><STRONG><a name="[97]"></a>sdcard_init</STRONG> (Thumb, 330 bytes, Stack size 40 bytes, sd_card.o(.text))
+<P><STRONG><a name="[97]"></a>sdcard_init</STRONG> (Thumb, 334 bytes, Stack size 40 bytes, sd_card.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200 + Unknown Stack Size
 <LI>Call Chain = sdcard_init &rArr; SPI_Receive_Data_Compare &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_ACMD
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a3]"></a>SD_Read_Block</STRONG> (Thumb, 80 bytes, Stack size 216 bytes, sd_card.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<P><STRONG><a name="[98]"></a>SD_Read_Block</STRONG> (Thumb, 74 bytes, Stack size 216 bytes, sd_card.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = SD_Read_Block &rArr; SPI_SEND_CMD
+</UL>
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
+<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
 
 <P><STRONG><a name="[a4]"></a>SD_Read_Multiple_Blocks</STRONG> (Thumb, 166 bytes, Stack size 40 bytes, sd_card.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<BR><BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
 
 <P><STRONG><a name="[a5]"></a>SD_Write_Block</STRONG> (Thumb, 164 bytes, Stack size 64 bytes, sd_card.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR><BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Transfer
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 </UL>
 
-<P><STRONG><a name="[a7]"></a>sdcard_format</STRONG> (Thumb, 424 bytes, Stack size 32 bytes, sd_card.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
+<P><STRONG><a name="[a7]"></a>sdcard_format</STRONG> (Thumb, 474 bytes, Stack size 32 bytes, sd_card.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_SEND_CMD
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Single_Shot
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutString
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OutCRLF
 </UL>
@@ -1436,7 +1437,7 @@ Global Symbols
 
 <P><STRONG><a name="[d1]"></a>_ll_ushift_r</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 
-<P><STRONG><a name="[99]"></a>__2sprintf</STRONG> (Thumb, 34 bytes, Stack size 32 bytes, noretval__2sprintf.o(.text))
+<P><STRONG><a name="[9a]"></a>__2sprintf</STRONG> (Thumb, 34 bytes, Stack size 32 bytes, noretval__2sprintf.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120 + Unknown Stack Size
 <LI>Call Chain = __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1446,7 +1447,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_format
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Write_Block
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_Read_Multiple_Blocks
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_Receive_Data_Compare
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sdcard_init
 </UL>
 
@@ -1501,11 +1502,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 
 <P><STRONG><a name="[7a]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, _sputc.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> noretval__2sprintf.o(.text)
 </UL>

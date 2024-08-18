@@ -30,6 +30,8 @@ int main (void){
 
   SPI_Init(); 
   sdcard_init();
+  SD_Read_Block(0x00000000);  
+  
 while(1);
 
 }

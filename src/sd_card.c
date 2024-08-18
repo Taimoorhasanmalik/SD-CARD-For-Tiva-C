@@ -54,7 +54,6 @@ void sdcard_init(void){
   do {
       response_byte= SPI_SEND_ACMD(41,0X40000000);
     } while (response_byte != 0x00);
-  SPI_Transfer(0xFF);
   sprintf(string,"%d",response_byte);
   UART_OutString(string);
 	OutCRLF();
@@ -66,16 +65,25 @@ void sdcard_init(void){
 
   SPI_Transfer(0xFF);  // Send a dummy byte before CMD58
   while (SPI_STATUS_R & SPI_BUSY_FLAG);
-  SPI_SEND_CMD(58, 0x00000000, 0);  // CMD58 to read OCR
-  while (SPI_STATUS_R & SPI_BUSY_FLAG);
-  response_byte = SPI_Receive_Data_Single_Shot();
-  while(response_byte == 0x00 || response_byte == 0xFF){response_byte = SPI_Receive_Data_Single_Shot();} // OCR CHECK
-  if (response_byte & 0x8 != 0x8 || response_byte & 0x80 != 0x80  ){
+  if(SPI_SEND_CMD(58, 0x00000000, 0))
+  {
     OutCRLF();
   	UART_OutString("FAILED CMD58");
     OutCRLF();
     sprintf(string,"%d",response_byte);
     UART_OutString(string);
+  }  // CMD58 to read OCR
+  else{
+  if (response_byte & 0x8 != 0xC0){
+  	UART_OutString("FAILED CMD58");
+    OutCRLF();
+    sprintf(string,"%d",response_byte);
+    UART_OutString(string);
+  }
+    OutCRLF();
+  	UART_OutString("Completed Initialization");
+    OutCRLF();
+
   }
 }
 uint32_t SPI_SEND_ACMD(uint8_t cmd, uint32_t arg) {
@@ -138,19 +146,16 @@ void SD_Read_Block(uint32_t block_address) {
     // Most modern SD cards use block addressing, so no conversion might be necessary.
 
     // Send CMD17 (Read Single Block)
-    SPI_SEND_CMD(17, block_address, 0);
-
-    // Wait for the R1 response (should be 0x00 if successful)
-    response = SPI_Receive_Data_Compare(0x00);
-
-    // Wait for data token (0xFE)
-    response = SPI_Receive_Data_Compare(0xFE);
-
+    if (SPI_SEND_CMD(17, block_address, 0)){
     // Read the 512-byte data block
+    UART_OutString("Error Reading Block");
+    OutCRLF();  
+    }
+    else{
     for (i = 0; i < 512; i++) {
         buffer[i] = SPI_Receive_Data_Single_Shot();
     }
-
+    }
     // Skip the 2-byte CRC (optional)
     SPI_Receive_Data_Single_Shot();
     SPI_Receive_Data_Single_Shot();
