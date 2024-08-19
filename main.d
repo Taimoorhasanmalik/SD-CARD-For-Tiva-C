@@ -7,3 +7,4 @@
 .\main.o: src\../include/gpio.h
 .\main.o: src\../include/uart.h
 .\main.o: src\../include/sd_card.h
+.\main.o: src\../include/imem.h

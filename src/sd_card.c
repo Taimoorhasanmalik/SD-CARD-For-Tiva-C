@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <inttypes.h>
 #include <time.h>
+#include <string.h>
+
 
 #include "../include/spi.h"
 #include "../include/gpio.h"
@@ -142,6 +144,9 @@ void SD_Read_Block(uint32_t block_address) {
     uint8_t response;
     uint16_t i;
     uint8_t buffer[200];
+    uint8_t filename[11];
+    uint8_t attributes;
+    uint16_t file_size;
     // Convert block address to byte address if card is in byte addressing mode
     // Most modern SD cards use block addressing, so no conversion might be necessary.
 
@@ -163,6 +168,11 @@ void SD_Read_Block(uint32_t block_address) {
     // Now buffer[] contains the data from the block
     UART_OutString("Block Read Successfully");
     OutCRLF();
+    for (i = 0; i < 512; i++) { // Assume 16 directory entries per block
+            // Extract file name, attributes, and size from directory entry
+            UART_OutString(buffer);
+            OutCRLF();
+        }
 }
 
 void SD_Read_Multiple_Blocks(uint32_t block_address)
@@ -197,26 +207,37 @@ void SD_Read_Multiple_Blocks(uint32_t block_address)
 }
 
 
-void SD_Write_Block(uint32_t block_address, uint64_t data)
+void SD_Write_Block(uint32_t block_address, uint32_t* data)
 {
     int i;
     char string[20];
     uint8_t response;
-    uint8_t dataBytes[8];
-
-    // Convert 64-bit data to byte array
-    for (i = 0; i < 8; i++) {
-        dataBytes[i] = (data >> (56 - (i * 8))) & 0xFF;
+    uint8_t arr[256];
+    // Convert 32-bit data to byte array
+    for (i = 0; i < data_size/512; i++) {
+      for(j=0; j< 4;j++)
+        arr[j] = (imem[i] >> (24 - (j * 8))) & 0xFF;
     }
 
     // Send CMD24 to write single block
-    SPI_SEND_CMD(24, block_address, 0);
-    response = SPI_Receive_Data_Compare(0x00);
-    SPI_Transfer(0xFF);
+    if(SPI_SEND_CMD(24, block_address, 0))
+    {
+      UART_OutString("CMD24 Failed");
+      OutCRLF();
+    }
+    
+    SPI_Transfer(0xFE);
     while(SPI_STATUS_R & SPI_BUSY_FLAG);
     // Write data to SD card
-    for (i = 0; i < 8; i++) {
-        SPI_Transfer(dataBytes[i]);
+    for (i = 0; i < 4*(data_size/512); i++) {
+      SPI_Transfer(arr[i]);
+      while(SPI_STATUS_R & SPI_BUSY_FLAG);
+    }
+    spi_transfer(0xFF);  // Send dummy CRC (not used but must be sent)
+    spi_transfer(0xFF);
+    response = spi_transfer(0xFF);
+    if ((response & 0x1F) != 0x05) {
+        // Handle error
     }
 
     // Wait for write operation to complete

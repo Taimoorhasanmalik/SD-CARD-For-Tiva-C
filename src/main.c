@@ -14,7 +14,7 @@
 #include "../include/gpio.h"
 #include "../include/uart.h"
 #include "../include/sd_card.h"
-
+#include "../include/imem.h"
 #define MAX_APP_SIZE               0x200
 
 void SystemInit(void){};
@@ -31,7 +31,6 @@ int main (void){
   SPI_Init(); 
   sdcard_init();
   SD_Read_Block(0x00000000);  
-  
 while(1);
 
 }
