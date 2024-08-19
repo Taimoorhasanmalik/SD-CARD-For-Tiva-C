@@ -4,18 +4,28 @@ F (.\src\gpio.c)(0x66B9ADFD)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interw
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\gpio.h)(0x66B9ADFD)
-F (.\src\main.c)(0x66BF4D87)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\src\main.c)(0x66C0A862)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdio.h)(0x51C7E174)
-I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66BF4AEB)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66C09F2B)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\gpio.h)(0x66B9ADFD)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
-F (.\src\spi.c)(0x66BF4AD3)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\spi.o --omf_browse .\spi.crf --depend .\spi.d)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\sd_card.h)(0x66C0A663)
+F (.\src\spi.c)(0x66C09F11)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\spi.o --omf_browse .\spi.crf --depend .\spi.d)
 I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
-I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66BF4AEB)
+I (D:\Keil uVision4\ARM\ARMCC\include\stdio.h)(0x51C7E174)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66C09F2B)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
 F (.\src\uart.c)(0x66BCB056)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
 I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
 I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
+F (.\src\sd_card.c)(0x66C0AB9D)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I "D:\Keil uVision4\ARM\RV31\INC"-I "D:\Keil uVision4\ARM\CMSIS\Include"-I "D:\Keil uVision4\ARM\Inc\TI\TM4C123"-DTM4C123GH6PM-o .\sd_card.o --omf_browse .\sd_card.crf --depend .\sd_card.d)
+I (D:\Keil uVision4\ARM\ARMCC\include\stdio.h)(0x51C7E174)
+I (D:\Keil uVision4\ARM\ARMCC\include\inttypes.h)(0x51C7E174)
+I (D:\Keil uVision4\ARM\ARMCC\include\stdint.h)(0x51C7E174)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\spi.h)(0x66C09F2B)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\gpio.h)(0x66B9ADFD)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\uart.h)(0x66BCA31C)
+I (C:\Users\Taimoor\Desktop\SPI FLASH CODE\SPI CODE\include\sd_card.h)(0x66C0A663)

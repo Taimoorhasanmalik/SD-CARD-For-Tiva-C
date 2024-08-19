@@ -417,6 +417,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>sd_card.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\sd_card.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
